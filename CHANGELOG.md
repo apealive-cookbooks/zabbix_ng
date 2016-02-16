@@ -1,3 +1,9 @@
+# 0.1.2
+
+- Add yum repository
+- Fix converge on 'rhel' platform
+
+
 # 0.1.1
 
 - Restart zabbix agent after config file was deployed

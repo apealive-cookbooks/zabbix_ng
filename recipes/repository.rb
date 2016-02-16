@@ -42,6 +42,7 @@ when 'redhat', 'centos', 'fedora'
     gpgkey 'http://repo.zabbix.com/zabbix-official-repo.key'
     action :create
   end
+  include_recipe 'yum-epel'
 end
 
 
