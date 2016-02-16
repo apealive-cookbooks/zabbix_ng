@@ -19,9 +19,30 @@
 #
 
 # Official Zabbix repository
-apt_repository 'zabbix' do
-  uri 'http://repo.zabbix.com/zabbix/2.4/ubuntu'
-  distribution node['lsb']['codename']
-  components %w(main)
-  key 'http://repo.zabbix.com/zabbix-official-repo.key'
+# TODO, move repo keys and url to attributes
+case node['platform']
+when 'debian'
+  apt_repository 'zabbix' do
+    uri 'http://repo.zabbix.com/zabbix/2.4/debian'
+    distribution node['lsb']['codename']
+    components %w(main)
+    key 'http://repo.zabbix.com/zabbix-official-repo.key'
+  end
+when 'ubuntu'
+  apt_repository 'zabbix' do
+    uri 'http://repo.zabbix.com/zabbix/2.4/ubuntu'
+    distribution node['lsb']['codename']
+    components %w(main)
+    key 'http://repo.zabbix.com/zabbix-official-repo.key'
+  end
+when 'redhat', 'centos', 'fedora'
+  yum_repository 'zabbix' do
+    description "Official zabbix repository"
+    baseurl 'http://repo.zabbix.com/zabbix/2.4/rhel/7/x86_64'
+    gpgkey 'http://repo.zabbix.com/zabbix-official-repo.key'
+    action :create
+  end
 end
+
+
+
