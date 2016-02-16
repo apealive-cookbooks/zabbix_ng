@@ -10,4 +10,4 @@ depends          'apt'
 depends          'sudo'
 
 depends          'yum'
-depends          'yum_epel'
+#depends          'yum-epel'
