@@ -20,8 +20,14 @@
 
 include_recipe 'zabbix_ng::repository'
 
+#package 'zabbix-server-mysql'
 package 'zabbix-server-pgsql'
-package 'zabbix-frontend-php'
+case node[:platform_family]
+when 'debian'
+  package 'zabbix-frontend-php'
+when 'rhel'
+  package 'zabbix-web-pgsql'
+end
 
 service 'zabbix-server' do
   action :enable
