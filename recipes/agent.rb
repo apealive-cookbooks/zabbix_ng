@@ -57,9 +57,9 @@ end
 service 'zabbix-agent' do
   case node['platform_family']
   when 'debian'
-    subscribes :restart, 'template[/etc/zabbix/zabbix_agentd.d/yum.conf]'
-  when 'rhel', 'fedora'
     subscribes :restart, 'template[/etc/zabbix/zabbix_agentd.d/apt.conf]'
+  when 'rhel', 'fedora'
+    subscribes :restart, 'template[/etc/zabbix/zabbix_agentd.d/yum.conf]'
   end
 
   subscribes :restart, 'template[/etc/zabbix/zabbix_agentd.conf'
