@@ -20,9 +20,8 @@
 
 include_recipe 'zabbix_ng::repository'
 
-#package 'zabbix-server-mysql'
 package 'zabbix-server-pgsql'
-case node[:platform_family]
+case node['platform_family']
 when 'debian'
   package 'zabbix-frontend-php'
 when 'rhel'
