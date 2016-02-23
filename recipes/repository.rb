@@ -19,18 +19,18 @@
 #
 
 # Official Zabbix repository
-# TODO, move repo keys and url to attributes
+version = node['zabbix_ng']['version'].split('.')[0..1].join('.')
 case node['platform']
 when 'debian'
   apt_repository 'zabbix' do
-    uri 'http://repo.zabbix.com/zabbix/2.4/debian'
+    uri "http://repo.zabbix.com/zabbix/#{version}/debian"
     distribution node['lsb']['codename']
     components %w(main)
     key 'http://repo.zabbix.com/zabbix-official-repo.key'
   end
 when 'ubuntu'
   apt_repository 'zabbix' do
-    uri 'http://repo.zabbix.com/zabbix/2.4/ubuntu'
+    uri "http://repo.zabbix.com/zabbix/#{version}/ubuntu"
     distribution node['lsb']['codename']
     components %w(main)
     key 'http://repo.zabbix.com/zabbix-official-repo.key'
@@ -38,7 +38,7 @@ when 'ubuntu'
 when 'redhat', 'centos', 'fedora'
   yum_repository 'zabbix' do
     description "Official zabbix repository"
-    baseurl 'http://repo.zabbix.com/zabbix/2.4/rhel/7/x86_64'
+    baseurl "http://repo.zabbix.com/zabbix/#{version}/rhel/7/x86_64"
     gpgkey 'http://repo.zabbix.com/zabbix-official-repo.key'
     action :create
   end
