@@ -19,7 +19,7 @@
 #
 
 # Official Zabbix repository
-# TODO, move repo keys and url to attributes
+# TODO: read repo keys and base url from attributes
 case node['platform']
 when 'debian'
   apt_repository 'zabbix' do
@@ -40,7 +40,6 @@ when 'redhat', 'centos', 'fedora'
     description "Official zabbix repository"
     baseurl 'http://repo.zabbix.com/zabbix/2.4/rhel/7/x86_64'
     gpgkey 'http://repo.zabbix.com/zabbix-official-repo.key'
-    action :create
   end
   include_recipe 'yum-epel'
 end
