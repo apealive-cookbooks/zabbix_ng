@@ -19,5 +19,20 @@
 #
 
 default['zabbix_ng']['zabbix_server'] = '127.0.0.1'
-default['zabbix_ng']['version'] = '3.0'
+default['zabbix_ng']['version'] = value_for_platform_family(
+  'rhel' => '3.0.0-1.el7',
+  'default' => '3.0'
+)
+
+
+default['zabbix_ng']['repository']['key'] = 'http://repo.zabbix.com/zabbix-official-repo.key'
+uri_version = node['zabbix_ng']['version'].split('.')[0..1].join('.')
+default['zabbix_ng']['repository']['uri'] = value_for_platform(
+  ['redhat', 'centos', 'fedora'] => {
+    "~> 6" => "http://repo.zabbix.com/zabbix/#{uri_version}/rhel/6/x86_64",
+    "~> 7" => "http://repo.zabbix.com/zabbix/#{uri_version}/rhel/7/x86_64" },
+  'debian' => { 'default' => "http://repo.zabbix.com/zabbix/#{uri_version}/debian"},
+  'ubuntu' => { 'default' => "http://repo.zabbix.com/zabbix/#{uri_version}/ubuntu"},
+)
+
 

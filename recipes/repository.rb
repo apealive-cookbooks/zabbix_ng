@@ -19,28 +19,26 @@
 #
 
 # Official Zabbix repository
-version = node['zabbix_ng']['version'].split('.')[0..1].join('.')
-# TODO: read repo keys and base url from attributes
 case node['platform']
 when 'debian'
   apt_repository 'zabbix' do
-    uri "http://repo.zabbix.com/zabbix/#{version}/debian"
+    uri node['zabbix_ng']['repository']['uri']
     distribution node['lsb']['codename']
     components %w(main)
-    key 'http://repo.zabbix.com/zabbix-official-repo.key'
+    key node['zabbix_ng']['repository']['key']
   end
 when 'ubuntu'
   apt_repository 'zabbix' do
-    uri "http://repo.zabbix.com/zabbix/#{version}/ubuntu"
+    uri node['zabbix_ng']['repository']['uri']
     distribution node['lsb']['codename']
     components %w(main)
-    key 'http://repo.zabbix.com/zabbix-official-repo.key'
+    key node['zabbix_ng']['repository']['key']
   end
 when 'redhat', 'centos', 'fedora'
   yum_repository 'zabbix' do
     description "Official zabbix repository"
-    baseurl "http://repo.zabbix.com/zabbix/#{version}/rhel/7/x86_64"
-    gpgkey 'http://repo.zabbix.com/zabbix-official-repo.key'
+    baseurl node['zabbix_ng']['repository']['uri']
+    gpgkey node['zabbix_ng']['repository']['key']
   end
   include_recipe 'yum-epel'
 end
