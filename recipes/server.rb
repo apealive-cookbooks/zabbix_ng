@@ -23,7 +23,8 @@ include_recipe 'zabbix_ng::repository'
 package 'zabbix-server-pgsql' do
   version node['zabbix_ng']['version']
 end
-case node[:platform_family]
+package 'zabbix-server-pgsql'
+case node['platform_family']
 when 'debian'
   package 'zabbix-frontend-php' do
     version node['zabbix_ng']['version']
