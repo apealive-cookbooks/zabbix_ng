@@ -15,7 +15,6 @@ suites:
   - name: default
     run_list:
       - zabbix_ng::default
-      - zabbix_ng::sender
     attributes:
 
   - name: server
