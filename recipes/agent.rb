@@ -50,8 +50,7 @@ when 'debian'
     source   'agent/apt.conf.erb'
   end
 
-when 'rhel', 'fedora'
-  # TODO: yum repository is currently not supported anyway
+when 'rhel', 'centos', 'fedora'
   template '/etc/zabbix/zabbix_agentd.d/yum.conf' do
     owner    'root'
     group    'root'
@@ -65,7 +64,7 @@ service 'zabbix-agent' do
   case node['platform_family']
   when 'debian'
     subscribes :restart, 'template[/etc/zabbix/zabbix_agentd.d/apt.conf]'
-  when 'rhel', 'fedora'
+  when 'rhel', 'centos', 'fedora'
     subscribes :restart, 'template[/etc/zabbix/zabbix_agentd.d/yum.conf]'
   end
 
