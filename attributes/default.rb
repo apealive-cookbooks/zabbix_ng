@@ -19,14 +19,19 @@
 #
 
 default['zabbix_ng']['zabbix_server'] = '127.0.0.1'
-default['zabbix_ng']['version'] = value_for_platform_family(
-  'rhel' => '3.0.0-1.el7',
-  'default' => '3.0'
+default['zabbix_ng']['version'] = value_for_platform(
+  ['rhel','centos']   => {
+    "~> 7" => '3.0.0-1.el7',
+  },
+  'ubuntu'  => {
+    '~> 14' => '1:3.0.0-1+trusty'
+  },
+  'default' => {'default' => '3.0.0'}
 )
 
-
 default['zabbix_ng']['repository']['key'] = 'http://repo.zabbix.com/zabbix-official-repo.key'
-uri_version = node['zabbix_ng']['version'].split('.')[0..1].join('.')
+
+uri_version = node['zabbix_ng']['version'].to_s.gsub(/^[0-9]*:/,'').split('.')[0..1].join('.')
 default['zabbix_ng']['repository']['uri'] = value_for_platform(
   ['redhat', 'centos', 'fedora'] => {
     "~> 6" => "http://repo.zabbix.com/zabbix/#{uri_version}/rhel/6/x86_64",

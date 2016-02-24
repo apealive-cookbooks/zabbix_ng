@@ -20,7 +20,9 @@
 
 include_recipe 'zabbix_ng::repository'
 
-package 'zabbix-agent'
+package 'zabbix-agent' do
+  version node['zabbix_ng']['version']
+end
 
 template '/etc/zabbix/zabbix_agentd.conf' do
   mode      00644
@@ -34,6 +36,11 @@ case node['platform_family']
 when 'debian'
   # aptitude is required to get available update count
   package 'aptitude'
+
+  directory '/etc/zabbix/zabbix_agentd.d' do
+    mode      00644
+    recursive true
+  end
 
   template '/etc/zabbix/zabbix_agentd.d/apt.conf' do
     owner    'root'
