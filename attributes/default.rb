@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-default['zabbix_ng']['zabbix_server'] = '127.0.0.1'
 default['zabbix_ng']['version'] = value_for_platform(
   ['rhel','centos']   => {
     "~> 7" => '3.0.0-1.el7',
